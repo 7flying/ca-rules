@@ -3,12 +3,12 @@ from Tkinter import *
 
 CANVAS_WIDTH = 600
 CANVAS_HEIGHT = 600
-CELL_X = CELL_Y = 10
+CELL_X = CELL_Y = 35
 
 def paint_grid(canvas):
-	for x in range(10, CANVAS_WIDTH, 10):
+	for x in range(CELL_X, CANVAS_WIDTH, CELL_Y):
 		canvas.create_line(x, 0, x, CANVAS_HEIGHT, fill="black")
-	for y in range(10, CANVAS_HEIGHT, 10):
+	for y in range(CELL_X, CANVAS_HEIGHT, CELL_Y):
 		canvas.create_line(0, y, CANVAS_WIDTH, y, fill="black")
 
 def ufill_cell(canvas, x, y, fill):
