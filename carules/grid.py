@@ -10,6 +10,12 @@ class Grid(object):
 		self.width = width
 		self.heigh = heigh
 		self.cell_side = cell_side
+		self.cell_matrix = []
+		for i in range(self.heigh / self.cell_side):
+			temp = []
+			for j in range(self.width / self.cell_side):
+				temp.append(None)
+			self.cell_matrix.append(temp)
 
 	def paint(self):
 		""" Paints the grid"""
@@ -24,7 +30,19 @@ class Grid(object):
 		self.window.mainloop()
 
 	def fill_cell(self, x, y):
-		pass
+		""" Paints the cell at (x, y) in the grid."""
+		# X: Top-left. (x1,y1) = ((x * CELL_SIDE), (y * CELL_SIDE))
+		x1 = x * self.cell_side
+		y1 = y * self.cell_side
+		# Y: Bottom-right. (x2,y2) = ((x * CELL_SIDE + CELL_SIDE),
+		# (y * CELL_SIDE + CELL_SIDE) )
+		x2 = x1 + self.cell_side
+		y2 = y1 + self.cell_side
+		temp_rect = canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
+		#self.cell_matrix[x][y] = temp_rect
+		self.window.update()
 
-	def unfill_cell(self, x, y):
-		pass
+	def delete_cell(self, x, y):
+		""" Deletes the cell at (x,y) in the grid."""
+		self.canvas.delete(self.cell_matrix[x][y])
+		self.cell_matrix[x][y] = None
