@@ -66,3 +66,11 @@ class Grid(object):
 	def get_cell_colour(self, x, y):
 		""" Returns the colour of the cell at (x, y)."""
 		return self.canvas.itemcget(self.cell_matrix[x][y], "fill")
+
+	def get_num_xcells(self):
+		""" Returns the number of x cells."""
+		return self.width / self.cell_side
+
+	def get_num_ycells(self):
+		""" Returns the number of y cells."""
+		return self.heigh / self.cell_side
