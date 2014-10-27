@@ -7,7 +7,7 @@ class Grid(object):
 	# Default title
 	title = "CA-Rules!"
 
-	def __init__(self, width, heigh, cell_side, refresh=1):
+	def __init__(self, width, heigh, cell_side, refresh=0.5):
 		self.width = width
 		self.heigh = heigh
 		self.cell_side = cell_side
@@ -45,17 +45,15 @@ class Grid(object):
 		""" Paints the cell at (x, y) in the grid. If no colour is specified,
 			the default one is black.
 		"""
-		print "Fill cell %r" % (self.cell_matrix[x][y])
+		#print "Fill cell %r" % (self.cell_matrix[x][y])
 		self.canvas.itemconfig(self.cell_matrix[x][y], fill=colour)
 		self.window.update_idletasks()
-		sleep(self.refresh)
 
 	def delete_cell(self, x, y):
 		""" Deletes the cell at (x,y) in the grid."""
-		print "Delete cell cell %r" % (self.cell_matrix[x][y])
+		#print "Delete cell cell %r" % (self.cell_matrix[x][y])
 		self.canvas.itemconfig(self.cell_matrix[x][y], fill="white")
 		self.window.update_idletasks()
-		sleep(self.refresh)
 		
 	def set_title(self, title):
 		""" Sets the title to the window. Will have 'CA-Rules! - ' plus
@@ -74,3 +72,7 @@ class Grid(object):
 	def get_num_ycells(self):
 		""" Returns the number of y cells."""
 		return self.heigh / self.cell_side
+
+	def freeze(self):
+		""" Freezes the window the specified number of seconds. """
+		sleep(self.refresh)
