@@ -1,23 +1,31 @@
 # -*- coding: utf-8 -*-
 from grid import Grid
-from automaton import GameOfLife, DayAndNight, LifeWithoutDeath
+from automaton import GameOfLife, DayAndNight, LifeWithoutDeath, HighLife
 
 def main():
+	
+	my_grid = Grid(350, 350, 10)
 	"""
 	# Game of Life
-	gof = GameOfLife(Grid(600, 600, 20))
-	gof.generate_random(250)
+	gof = GameOfLife(my_grid)
+	gof.generate_random(500)
 	gof.start()
-	
+
 	# Day & Night
-	dan = DayAndNight(Grid(600, 600, 20))
-	dan.generate_random(150)
+	dan = DayAndNight(my_grid)
+	dan.generate_random(500)
 	dan.start()
 	"""
 	# Life without death
-	lwd = LifeWithoutDeath(Grid(600,600, 20))
-	lwd.generate_random(2)
+	lwd = LifeWithoutDeath(my_grid)
+	lwd.generate_random(150)
 	lwd.start()
+	"""
+	# High Life
+	hl = HighLife(my_grid)
+	hl.generate_random(550)
+	hl.start()
+	"""
 
 if __name__ == '__main__':
 	main()

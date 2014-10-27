@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from os import path
 from Tkinter import *
 from time import sleep
 
@@ -6,13 +7,16 @@ class Grid(object):
 	"""Grid class. Handles the painting."""
 	# Default title
 	title = "CA-Rules!"
+	launcher = path.join("rsc", "pulsar-launcher.png")
 
-	def __init__(self, width, heigh, cell_side, refresh=0.5):
+	def __init__(self, width, heigh, cell_side, refresh=0.1):
 		self.width = width
 		self.heigh = heigh
 		self.cell_side = cell_side
 		self.refresh = refresh
 		self.window = Tk()
+		self.window.call('wm', 'iconphoto', self.window,
+			PhotoImage(file=Grid.launcher))
 		self.window.title(Grid.title)
 		self.canvas = Canvas(self.window, width=self.width, height=self.heigh)
 		self.canvas.pack()
@@ -26,9 +30,9 @@ class Grid(object):
 	def paint(self):
 		""" Paints the grid"""
 		for x in range(self.cell_side, self.width, self.cell_side):
-			self.canvas.create_line(x, 0, x, self.heigh, fill="grey")
+			self.canvas.create_line(x, 0, x, self.heigh, fill="black")
 		for y in range(self.cell_side, self.heigh, self.cell_side):
-			self.canvas.create_line(0, y, self.width, y, fill="grey")
+			self.canvas.create_line(0, y, self.width, y, fill="black")
 
 	def _create_cell(self, x, y):
 		""" Creates a cell in the grid"""

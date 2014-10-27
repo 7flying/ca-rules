@@ -34,7 +34,7 @@ class CellularAutomaton(object):
 		""" Starts the automaton."""
 		some_cell_alive = True
 		while some_cell_alive:
-			self.grid.freeze()
+			#self.grid.freeze()
 			some_cell_alive = self.paint()
 			self.next_generation()
 
@@ -44,9 +44,10 @@ class CellularAutomaton(object):
 			self.cells[random.randint(
 				0, self.grid.get_num_xcells() - 1)][random.randint(
 				0, self.grid.get_num_ycells() - 1 )] = "black"
+		
 
 class GameOfLife(CellularAutomaton):
-	""" Conway's Game of Life cellular automaton implementation"""
+	""" Conway's Game of Life cellular automaton implementation."""
 	title = "Game of Life"
 
 	def __init__(self, grid):
@@ -55,7 +56,7 @@ class GameOfLife(CellularAutomaton):
 		self.neigh = Moore(self.grid)
 
 	def next_generation(self):
-		""" For GoL:
+		""" For GoL (B3/S23)
 			Cell dies: 	- four or more neighbors (overpopulation).
 						- one or none neighbor (isolation).
   			Cell survives: two or three neighbors.
@@ -64,12 +65,19 @@ class GameOfLife(CellularAutomaton):
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
 				count = self.neigh.count_neighbors(j, i)
-				if count < 2 or count > 3:
-					self.cells[j][i] = "white"
-				elif count == 3:
+				# Survive
+				if self.grid.get_cell_colour(j, i) == "black":
+					if count < 2 or count > 3:
+						self.cells[j][i] = "white"
+					elif count == 2 or count == 3:
+						self.cells[j][i] = "black"	
+				# Born
+				elif count ==3:
 					self.cells[j][i] = "black"
 
+
 class DayAndNight(CellularAutomaton):
+	""" Day & Night cellular automaton implementation."""
 	title = "Day & Night"
 
 	def __init__(self, grid):
@@ -78,17 +86,24 @@ class DayAndNight(CellularAutomaton):
 		self.neigh = Moore(self.grid)
 
 	def next_generation(self):
-		""" For Day & Night """
+		""" For Day & Night (B3678/S34678)"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
 				count = self.neigh.count_neighbors(j, i)
-				if count < 3 or count == 5:
-					self.cells[j][i] = "white"
-				elif count == 3 or count == 4 or count > 5:
+				# Survive
+				if self.grid.get_cell_colour(j, i) == "black":
+					if (count > 5) or (count > 2 and count < 5):
+						self.cells[j][i] = "black"
+					else:
+						self.cells[j][i] = "white"
+				# Born
+				elif count == 3 or count > 5: 
 					self.cells[j][i] = "black"
 
+
 class LifeWithoutDeath(CellularAutomaton):
-	title = "Life Life Without Death"
+	""" Life Without Death cellular automaton implementation."""
+	title = "Life Without Death"
 
 	def __init__(self, grid):
 		CellularAutomaton.__init__(self, grid)
@@ -96,9 +111,37 @@ class LifeWithoutDeath(CellularAutomaton):
 		self.neigh = Moore(self.grid)
 
 	def next_generation(self):
-		""" For Life Without Death"""
+		""" For LwoD : S01245678/B3"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
 				count = self.neigh.count_neighbors(j, i)
-				if count > 0:
+				# Survive
+				if self.grid.get_cell_colour(j, i) == "black":
+					self.cells[j][i] = "black"
+				# Born
+				elif count == 3:
+					 self.cells[j][i] = "black"
+
+class HighLife(CellularAutomaton):
+	""" HighLife cellular automaton implementation"""
+	title = "High Life"
+
+	def __init__(self, grid):
+		CellularAutomaton.__init__(self, grid)
+		self.grid.set_title(HighLife.title)
+		self.neigh = Moore(self.grid)
+
+	def next_generation(self):
+		""" For HighLife (B3678/S34678)"""
+		for i in range(self.grid.get_num_ycells()):
+			for j in range(self.grid.get_num_xcells()):
+				count = self.neigh.count_neighbors(j, i)
+				# Survive
+				if self.grid.get_cell_colour(j, i) == "black":
+					if count == 2 or count == 3:
+						self.cells[j][i] = "black"
+					else:
+						self.cells[j][i] = "white"
+				# Born
+				elif count == 3 or count == 6:
 					self.cells[j][i] = "black"
