@@ -70,7 +70,7 @@ class GameOfLife(CellularAutomaton):
 					if count < 2 or count > 3:
 						self.cells[j][i] = "white"
 					elif count == 2 or count == 3:
-						self.cells[j][i] = "black"	
+						self.cells[j][i] = "black"
 				# Born
 				elif count ==3:
 					self.cells[j][i] = "black"
@@ -122,8 +122,9 @@ class LifeWithoutDeath(CellularAutomaton):
 				elif count == 3:
 					 self.cells[j][i] = "black"
 
+
 class HighLife(CellularAutomaton):
-	""" HighLife cellular automaton implementation"""
+	""" HighLife cellular automaton implementation."""
 	title = "High Life"
 
 	def __init__(self, grid):
@@ -144,4 +145,48 @@ class HighLife(CellularAutomaton):
 						self.cells[j][i] = "white"
 				# Born
 				elif count == 3 or count == 6:
+					self.cells[j][i] = "black"
+
+
+class Seeds(CellularAutomaton):
+	""" Seeds cellular automaton implementation."""
+	title = "Seeds"
+
+	def __init__(self, grid):
+		CellularAutomaton.__init__(self, grid)
+		self.grid.set_title(Seeds.title)
+		self.neigh = Moore(self.grid)
+
+	def next_generation(self):
+		""" For Seeds (B2/S)"""
+		for i in range(self.grid.get_num_ycells()):
+			for j in range(self.grid.get_num_xcells()):
+				count = self.neigh.count_neighbors(j, i)
+				# Survive
+				if self.grid.get_cell_colour(j, i) == "black":
+					self.cells[j][i] = "white"
+				# Born
+				elif count == 2:
+					self.cells[j][1] = "black"
+
+
+class Rule(CellularAutomaton):
+	""" To implement general rules."""
+	def __init__(self, grid, born="", survive=""):
+		CellularAutomaton.__init__(self, grid)
+		self.neigh = Moore(self.grid)
+		self.born = [str(i) for i in born]
+		self.survive =  [str(i) for i in survive]
+		self.grid.set_title("B" + "".join(self.born) + " / S" \
+			 + "".join(self.survive))
+
+	def next_generation(self):
+		for i in range(self.grid.get_num_ycells()):
+			for j in range(self.grid.get_num_xcells()):
+				count = self.neigh.count_neighbors(j, i)
+				# Survive
+				if self.grid.get_cell_colour(j, i) == "black":
+					if str(count) not in self.survive:
+						self.cells[j][i] = "white"
+				elif str(count) in self.born:
 					self.cells[j][i] = "black"
