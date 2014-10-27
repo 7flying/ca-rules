@@ -68,3 +68,37 @@ class GameOfLife(CellularAutomaton):
 					self.cells[j][i] = "white"
 				elif count == 3:
 					self.cells[j][i] = "black"
+
+class DayAndNight(CellularAutomaton):
+	title = "Day & Night"
+
+	def __init__(self, grid):
+		CellularAutomaton.__init__(self, grid)
+		self.grid.set_title(DayAndNight.title)
+		self.neigh = Moore(self.grid)
+
+	def next_generation(self):
+		""" For Day & Night """
+		for i in range(self.grid.get_num_ycells()):
+			for j in range(self.grid.get_num_xcells()):
+				count = self.neigh.count_neighbors(j, i)
+				if count < 3 or count == 5:
+					self.cells[j][i] = "white"
+				elif count == 3 or count == 4 or count > 5:
+					self.cells[j][i] = "black"
+
+class LifeWithoutDeath(CellularAutomaton):
+	title = "Life Life Without Death"
+
+	def __init__(self, grid):
+		CellularAutomaton.__init__(self, grid)
+		self.grid.set_title(LifeWithoutDeath.title)
+		self.neigh = Moore(self.grid)
+
+	def next_generation(self):
+		""" For Life Without Death"""
+		for i in range(self.grid.get_num_ycells()):
+			for j in range(self.grid.get_num_xcells()):
+				count = self.neigh.count_neighbors(j, i)
+				if count > 0:
+					self.cells[j][i] = "black"
