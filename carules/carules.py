@@ -3,6 +3,7 @@ from sys import argv, exit
 import getopt
 from grid import Grid
 from automaton import CellularAutomaton
+from rule import Rule
 
 def usage():
 	print "\n  carules - generate a cellular automaton"
@@ -61,7 +62,14 @@ def main(argv):
 					exit(2)
 			elif opt in ('-r', '--rule'):
 				rule = arg
-
+				born = [int(i) for i in rule[:rule.find(':')]]
+				survive = [int(i) for i in rule[rule.find(':') + 1:]]
+				thegrid = Grid(def_grid, def_grid, def_cell)
+				aut = Rule(thegrid, born, survive)
+				CellularAutomaton.generate_random(250, thegrid,
+					aut.get_cell_matrix())
+				aut.start()
+				exit(2)
 			elif opt in ('-n', '--name'):
 				name = arg
 				thegrid = Grid(def_grid, def_grid, def_cell)
@@ -69,6 +77,7 @@ def main(argv):
 				CellularAutomaton.generate_random(250, thegrid,
 					aut.get_cell_matrix())
 				aut.start()
+				exit(2)
 			else:
 				usage()
 				exit(2)

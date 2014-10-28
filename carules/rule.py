@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from neigborhood import Moore
+from neighborhood import Moore
 from grid import Grid
 
 class Rule(object):
@@ -48,3 +48,6 @@ class Rule(object):
 				# Born
 				elif str(count) in self.born:
 					self.cells[j][i] = "black"
+
+	def get_cell_matrix(self):
+		return self.cells
