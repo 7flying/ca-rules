@@ -20,8 +20,9 @@ def main():
 	wind = Canvas(tinker, width=CANVAS_WIDTH, height=CANVAS_HEIGHT)
 	wind.pack()
 	paint_grid(wind)
-	ufill_cell(wind, 10, 10, "blue")
+	
 	mainloop()
+	ufill_cell(wind, 10, 10, "blue")
 
 if __name__ == '__main__':
 	main()

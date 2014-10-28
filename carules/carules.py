@@ -35,10 +35,10 @@ def plist():
 def main(argv):
 	try:
 		options, args = getopt.getopt(argv, "r:n:c:g:lh", [
-						'rule=', 'name=', 'list', 'help'])
+						'rule=', 'name=', 'cell=', 'grid=', 'list', 'help'])
 	except getopt.GetoptError:
 		usage()
-		sys.exit(2)
+		exit(2)
 	else:
 		def_grid = 350
 		def_cell = 10
