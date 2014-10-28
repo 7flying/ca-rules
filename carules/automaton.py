@@ -49,6 +49,14 @@ class CellularAutomaton(object):
 
 	def get_cell_matrix(self):
 		return self.cells
+
+	@staticmethod
+	def factory(name, grid):
+		if name == "GameOfLife": return GameOfLife(grid)
+		if name == "DayAndNight": return DayAndNight(grid)
+		if name == "LifeWithoutDeath": return LifeWithoutDeath(grid)
+		if name == "HighLife": return HighLife(grid)
+		if name == "Seeds": return Seeds(grid)
 		
 
 class GameOfLife(CellularAutomaton):

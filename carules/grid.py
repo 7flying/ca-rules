@@ -7,7 +7,7 @@ class Grid(object):
 	"""Grid class. Handles the painting."""
 	# Default title
 	title = "CA-Rules!"
-	launcher = path.join("rsc", "pulsar-launcher.png")
+	launcher = path.join("rsc", "pulsar-launcher.gif")
 
 	def __init__(self, width, heigh, cell_side, refresh=0.1):
 		self.width = width
