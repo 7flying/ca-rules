@@ -8,7 +8,7 @@ How to use
 
 ####Automata Generation
 
-* You can generate an automata giving its name.
+* You can generate an automaton giving its name.
 
   Game of Life is generated this way:
 
