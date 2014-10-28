@@ -30,7 +30,7 @@ How to use
   ```
   and GoL will appear.
   
-  Rules are defined in the following style: *<born_rule>:<survive_rule>.*
+  Rules are defined in the following style: bornRule:surviveRule.
 
 ####Other options
 
