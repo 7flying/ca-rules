@@ -5,6 +5,7 @@ import random
 from grid import Grid
 from neighborhood import Moore
 
+
 class CellularAutomaton(object):
 
 	def __init__(self, grid):
@@ -38,12 +39,16 @@ class CellularAutomaton(object):
 			some_cell_alive = self.paint()
 			self.next_generation()
 
-	def generate_random(self, num):
+	@staticmethod
+	def generate_random(num, grid, cell_matrix):
 		""" Generates some random cells."""
 		for x in range(num):
-			self.cells[random.randint(
-				0, self.grid.get_num_xcells() - 1)][random.randint(
-				0, self.grid.get_num_ycells() - 1 )] = "black"
+			cell_matrix[random.randint(
+				0, grid.get_num_xcells() - 1)][random.randint(
+				0, grid.get_num_ycells() - 1 )] = "black"
+
+	def get_cell_matrix(self):
+		return self.cells
 		
 
 class GameOfLife(CellularAutomaton):
@@ -168,25 +173,3 @@ class Seeds(CellularAutomaton):
 				# Born
 				elif count == 2:
 					self.cells[j][1] = "black"
-
-
-class Rule(CellularAutomaton):
-	""" To implement general rules."""
-	def __init__(self, grid, born="", survive=""):
-		CellularAutomaton.__init__(self, grid)
-		self.neigh = Moore(self.grid)
-		self.born = [str(i) for i in born]
-		self.survive =  [str(i) for i in survive]
-		self.grid.set_title("B" + "".join(self.born) + " / S" \
-			 + "".join(self.survive))
-
-	def next_generation(self):
-		for i in range(self.grid.get_num_ycells()):
-			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
-				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
-					if str(count) not in self.survive:
-						self.cells[j][i] = "white"
-				elif str(count) in self.born:
-					self.cells[j][i] = "black"
