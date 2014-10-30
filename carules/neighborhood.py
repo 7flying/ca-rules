@@ -14,6 +14,9 @@ class Moore(Neighborhood):
 		self.grid = grid
 
 	def count_neighbors(self, x, y, colour="black"):
+		""" Counts the neighborhoods of the cell at (x, y) of the given colour.
+		 	If no colour is given, it will count black neighbors.
+		"""
 		# Plan
 		# |1|2|3|
 		# |4| |5|

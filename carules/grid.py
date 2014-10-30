@@ -9,11 +9,14 @@ class Grid(object):
 	title = "CA-Rules!"
 	launcher = path.join("rsc", "pulsar-launcher.gif")
 
-	def __init__(self, width, heigh, cell_side, refresh=0.1):
+	def __init__(self, width, heigh, cell_side, refresh=0.1,
+		alive='black', death='white'):
 		self.width = width
 		self.heigh = heigh
 		self.cell_side = cell_side
 		self.refresh = refresh
+		self.alive = alive
+		self.death = death
 		self.window = Tk()
 		self.window.call('wm', 'iconphoto', self.window,
 			PhotoImage(file=Grid.launcher))
@@ -43,7 +46,8 @@ class Grid(object):
 		# (y * CELL_SIDE + CELL_SIDE) )
 		x2 = x1 + self.cell_side
 		y2 = y1 + self.cell_side
-		return self.canvas.create_rectangle(x1, y1, x2, y2, fill="white")
+		colour = self.death
+		return self.canvas.create_rectangle(x1, y1, x2, y2, fill=colour)
 
 	def fill_cell(self, x, y, colour="black"):
 		""" Paints the cell at (x, y) in the grid. If no colour is specified,
@@ -56,7 +60,7 @@ class Grid(object):
 	def delete_cell(self, x, y):
 		""" Deletes the cell at (x,y) in the grid."""
 		#print "Delete cell cell %r" % (self.cell_matrix[x][y])
-		self.canvas.itemconfig(self.cell_matrix[x][y], fill="white")
+		self.canvas.itemconfig(self.cell_matrix[x][y], fill=self.death)
 		self.window.update_idletasks()
 		
 	def set_title(self, title):
@@ -80,3 +84,11 @@ class Grid(object):
 	def freeze(self):
 		""" Freezes the window the specified number of seconds. """
 		sleep(self.refresh)
+
+	def get_alive_colour(self):
+		""" Returns the colour specified for alive cells."""
+		return self.alive
+
+	def get_death_colour(self):
+		""" Returns the colour specified for death cells."""
+		return self.death

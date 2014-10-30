@@ -11,7 +11,7 @@ class Rule(object):
 		for i in range(self.grid.get_num_ycells()):
 			temp = []
 			for j in range(self.grid.get_num_xcells()):
-				temp.append("white")
+				temp.append(self.grid.get_death_colour())
 			self.cells.append(temp)
 		self.neigh = Moore(self.grid)
 		self.born = [str(i) for i in born]
@@ -25,7 +25,7 @@ class Rule(object):
 		for y in range(self.grid.get_num_ycells()):
 			for x in range(self.grid.get_num_xcells()):
 				self.grid.fill_cell(x, y, self.cells[x][y])
-				if self.cells[x][y] == "black":
+				if self.cells[x][y] == self.grid.get_alive_colour():
 					ret = True
 		return ret
 
@@ -40,14 +40,14 @@ class Rule(object):
 	def next_generation(self):
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
+				count = self.neigh.count_neighbors(j, i, self.grid.get_alive_colour())
 				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
+				if self.grid.get_cell_colour(j, i) == self.grid.get_alive_colour():
 					if str(count) not in self.survive:
-						self.cells[j][i] = "white"
+						self.cells[j][i] = self.grid.get_death_colour()
 				# Born
 				elif str(count) in self.born:
-					self.cells[j][i] = "black"
+					self.cells[j][i] = self.grid.get_alive_colour()
 
 	def get_cell_matrix(self):
 		return self.cells

@@ -14,7 +14,7 @@ class CellularAutomaton(object):
 		for i in range(self.grid.get_num_ycells()):
 			temp = []
 			for j in range(self.grid.get_num_xcells()):
-				temp.append("white")
+				temp.append(grid.get_death_colour())
 			self.cells.append(temp)
 
 	@abc.abstractmethod
@@ -27,7 +27,7 @@ class CellularAutomaton(object):
 		for y in range(self.grid.get_num_ycells()):
 			for x in range(self.grid.get_num_xcells()):
 				self.grid.fill_cell(x, y, self.cells[x][y])
-				if self.cells[x][y] == "black":
+				if self.cells[x][y] == self.grid.get_alive_colour():
 					ret = True
 		return ret
 
@@ -40,12 +40,12 @@ class CellularAutomaton(object):
 			self.next_generation()
 
 	@staticmethod
-	def generate_random(num, grid, cell_matrix):
+	def generate_random(num, grid, cell_matrix, alive_colour="black"):
 		""" Generates some random cells."""
 		for x in range(num):
 			cell_matrix[random.randint(
 				0, grid.get_num_xcells() - 1)][random.randint(
-				0, grid.get_num_ycells() - 1 )] = "black"
+				0, grid.get_num_ycells() - 1 )] = alive_colour
 
 	def get_cell_matrix(self):
 		return self.cells
@@ -77,16 +77,16 @@ class GameOfLife(CellularAutomaton):
   		"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
+				count = self.neigh.count_neighbors(j, i, self.grid.get_alive_colour())
 				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
+				if self.grid.get_cell_colour(j, i) == self.grid.get_alive_colour():
 					if count < 2 or count > 3:
-						self.cells[j][i] = "white"
+						self.cells[j][i] = self.grid.get_death_colour()
 					elif count == 2 or count == 3:
-						self.cells[j][i] = "black"
+						self.cells[j][i] = self.grid.get_alive_colour()
 				# Born
 				elif count ==3:
-					self.cells[j][i] = "black"
+					self.cells[j][i] = self.grid.get_alive_colour()
 
 
 class DayAndNight(CellularAutomaton):
@@ -102,16 +102,16 @@ class DayAndNight(CellularAutomaton):
 		""" For Day & Night (B3678/S34678)"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
+				count = self.neigh.count_neighbors(j, i, self.grid.get_alive_colour())
 				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
+				if self.grid.get_cell_colour(j, i) == self.grid.get_alive_colour():
 					if (count > 5) or (count > 2 and count < 5):
-						self.cells[j][i] = "black"
+						self.cells[j][i] = self.grid.get_alive_colour()
 					else:
-						self.cells[j][i] = "white"
+						self.cells[j][i] = self.grid.get_death_colour()
 				# Born
 				elif count == 3 or count > 5: 
-					self.cells[j][i] = "black"
+					self.cells[j][i] = self.grid.get_alive_colour()
 
 
 class LifeWithoutDeath(CellularAutomaton):
@@ -127,13 +127,13 @@ class LifeWithoutDeath(CellularAutomaton):
 		""" For LwoD : S01245678/B3"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
+				count = self.neigh.count_neighbors(j, i, self.grid.get_alive_colour())
 				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
-					self.cells[j][i] = "black"
+				if self.grid.get_cell_colour(j, i) == self.grid.get_alive_colour():
+					self.cells[j][i] = self.grid.get_alive_colour()
 				# Born
 				elif count == 3:
-					 self.cells[j][i] = "black"
+					 self.cells[j][i] = self.grid.get_alive_colour()
 
 
 class HighLife(CellularAutomaton):
@@ -149,16 +149,16 @@ class HighLife(CellularAutomaton):
 		""" For HighLife (B3678/S34678)"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
+				count = self.neigh.count_neighbors(j, i, self.grid.get_alive_colour())
 				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
+				if self.grid.get_cell_colour(j, i) == self.grid.get_alive_colour():
 					if count == 2 or count == 3:
-						self.cells[j][i] = "black"
+						self.cells[j][i] = self.grid.get_alive_colour()
 					else:
-						self.cells[j][i] = "white"
+						self.cells[j][i] = self.grid.get_death_colour()
 				# Born
 				elif count == 3 or count == 6:
-					self.cells[j][i] = "black"
+					self.cells[j][i] = self.grid.get_alive_colour()
 
 
 class Seeds(CellularAutomaton):
@@ -174,10 +174,10 @@ class Seeds(CellularAutomaton):
 		""" For Seeds (B2/S)"""
 		for i in range(self.grid.get_num_ycells()):
 			for j in range(self.grid.get_num_xcells()):
-				count = self.neigh.count_neighbors(j, i)
+				count = self.neigh.count_neighbors(j, i, self.grid.get_alive_colour())
 				# Survive
-				if self.grid.get_cell_colour(j, i) == "black":
-					self.cells[j][i] = "white"
+				if self.grid.get_cell_colour(j, i) == self.grid.get_alive_colour():
+					self.cells[j][i] = self.grid.get_death_colour()
 				# Born
 				elif count == 2:
-					self.cells[j][1] = "black"
+					self.cells[j][1] = self.grid.get_alive_colour()
