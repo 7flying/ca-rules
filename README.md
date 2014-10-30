@@ -8,7 +8,7 @@ How to use
 
 ####Automata Generation
 
-* You can generate an automata giving its name.
+* You can generate an automaton giving its name.
 
   Game of Life is generated this way:
 
@@ -30,7 +30,7 @@ How to use
   ```
   and GoL will appear.
   
-  Rules are defined in the following style: *<born_rule>:<survive_rule>.*
+  Rules are defined in the following style: bornRule:surviveRule.
 
 ####Other options
 
