@@ -46,6 +46,16 @@ How to use
   ```
   python carules.py --cell 15 -r 357:1358
   ```
+* Change colours!
+  Use *--fill ALIVE:DEAD* option, where 'alive' and 'dead' are Tk named colours for alive and dead cells. For instance: 'red', 'blue', 'firebrick'... etc.
+ 
+  Spaces are not allowed in the name, so use '-' instead.
+  ```
+  python carules.py -n DayAndNight --fill dark-violet:forest-green
+  python caryules.py -r 368:245 -f medium-spring-green:grey -g 800 -c 20
+  ```
+  
+  You can find a list of colours [here](http://wiki.tcl.tk/16166).
   
 * Further explanations/help typing:
   ```
