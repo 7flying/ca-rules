@@ -6,7 +6,7 @@ CA-Rules is a cellular automata command-line generation tool.
 How to use
 ----------
 
-####Automata Generation
+#### Automata Generation
 
 * You can generate an automaton giving its name.
 
@@ -32,7 +32,7 @@ How to use
   
   Rules are defined in the following style: bornRule:surviveRule.
 
-####Other options
+#### Other options
 
 * The window size can be changed using *--grid SIZE* option.
   
@@ -67,6 +67,7 @@ Considerations
 
 * To close the window send a keyboard interrupt (control + C).
 * The window will close by itself when all the cells are dead.
-
+* Launch the script inside ```carules``` directory, otherwise the window icon
+won't load and Tkinter will crash.
 
 Enjoy!
