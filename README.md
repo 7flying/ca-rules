@@ -3,6 +3,8 @@ CA-Rules!
 
 CA-Rules is a cellular automata command-line generation tool.
 
+<a href="url"><img src="https://github.com/7flying/ca-rules/blob/master/gallery/maze.gif" height="300" width="300" ></a>
+
 How to use
 ----------
 
@@ -69,5 +71,16 @@ Considerations
 * The window will close by itself when all the cells are dead.
 * Launch the script inside ```carules``` directory, otherwise the window icon
 won't load and Tkinter will crash.
+
+Gallery
+-------
+
+* Download the gifs from [```ca-rules/gallery/```](https://github.com/7flying/ca-rules/tree/master/gallery).
+
+Cool links
+----------
+
+* [Cellular Automata Rules Lexicon](http://psoup.math.wisc.edu/mcell/ca_rules.html)
+
 
 Enjoy!
